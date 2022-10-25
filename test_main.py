@@ -2,7 +2,7 @@ from tkinter import END
 from typing import List
 from unittest import main, mock, TestCase
 
-from main import add_item
+from main import add_item, delete_item
 
 
 class MainTest(TestCase):
@@ -32,14 +32,24 @@ class MainTest(TestCase):
     def test_add_item(self):
         self._setup_tasks(['one', 'two', 'three'])
 
-        entry = mock.MagicMock()
-        entry.get = mock.MagicMock(return_value='four')
-        listbox = mock.MagicMock()
+        entry = mock.Mock()
+        entry.get = mock.Mock(return_value='four')
+        listbox = mock.Mock()
 
         add_item(entry, listbox)
 
         self.assertEqual(self._read_tasks(), ['one', 'two', 'three', 'four'])
         listbox.insert.assert_called_with(END, 'four')
+
+    def test_delete_item(self):
+        self._setup_tasks(['one', 'two', 'three'])
+
+        listbox = mock.Mock()
+        listbox.get = mock.Mock(return_value='two\n')
+
+        delete_item(listbox)
+
+        self.assertEqual(self._read_tasks(), ['one', 'three'])
 
 
 

@@ -12,19 +12,24 @@ def add_item(entry: Entry, listbox: Listbox):
 
 
 def delete_item(listbox: Listbox):
+    print(f'Before: {listbox.get(ACTIVE)}')
     listbox.delete(ACTIVE)
+    print(f'After: {listbox.get(ACTIVE)}')
 
     with open('tasks.txt', 'r+') as tasks_list_file:
         lines = tasks_list_file.readlines()
 
+        tasks_list_file.seek(0)
         tasks_list_file.truncate()
 
         for line in lines:
-            if listbox.get(ACTIVE) == line[:-2]:
-                lines.remove(line)
-            tasks_list_file.write(line)
+            print(f'Active:[{listbox.get(ACTIVE)}]')
+            print(f'Line:[{line}]')
+            if listbox.get(ACTIVE) != line:
+                # lines.remove(line)
+                tasks_list_file.write(line)
 
-        tasks_list_file.close()
+        # tasks_list_file.close()
 
 
 def run():
