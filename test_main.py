@@ -47,6 +47,7 @@ class MainTest(TestCase):
         self._setup_tasks(['one', 'two', 'three'])
 
         listbox = mock.Mock()
+        
         def call_back(index):
             if index == ACTIVE and not self.delete_called:
                 return 'two\n'
