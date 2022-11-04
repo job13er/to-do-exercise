@@ -1,6 +1,7 @@
-from tkinter import END
 from typing import List
 from unittest import main, mock, TestCase
+
+from tkinter import ACTIVE, END
 
 from main import add_item, delete_item
 
@@ -10,6 +11,7 @@ class MainTest(TestCase):
 
     def setUp(self):
         super(MainTest, self).setUp()
+        self.delete_called = False
 
     def tearDown(self):
         super(MainTest, self).tearDown()
@@ -45,7 +47,38 @@ class MainTest(TestCase):
         self._setup_tasks(['one', 'two', 'three'])
 
         listbox = mock.Mock()
-        listbox.get = mock.Mock(return_value='two\n')
+        
+        def call_back(index):
+            if index == ACTIVE and not self.delete_called:
+                return 'two\n'
+            return None
+
+        def del_call(index):
+            if index == ACTIVE:
+                self.delete_called = True
+
+        listbox.delete = mock.Mock(side_effect = del_call)
+        listbox.get = mock.Mock(side_effect=call_back)
+
+        delete_item(listbox)
+
+        self.assertEqual(self._read_tasks(), ['one', 'three'])
+
+    def test_delete_item_whitespace(self):
+        self._setup_tasks(['one', 'two', 'three'])
+
+        listbox = mock.Mock()
+        def call_back(index):
+            if index == ACTIVE and not self.delete_called:
+                return 'two'
+            return None
+
+        def del_call(index):
+            if index == ACTIVE:
+                self.delete_called = True
+
+        listbox.delete = mock.Mock(side_effect = del_call)
+        listbox.get = mock.Mock(side_effect=call_back)
 
         delete_item(listbox)
 
