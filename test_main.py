@@ -20,16 +20,27 @@ class MainTest(TestCase):
         """Set up our tasks.txt file with the given list of tasks"""
         with open(self.task_filename, 'w') as f:
             for item in items:
-                f.write('\n' + item)
+                f.write(item + '\n')
 
-    def _read_tasks(self) -> List[str]:
-        """Read our tasks from tasks.txt and return a list of strings"""
+    # def _read_tasks(self) -> List[str]:
+    #     """Read our tasks from tasks.txt and return a list of strings"""
+    #     with open(self.task_filename, 'r') as f:
+    #         # for line in f.readlines():
+    #         #   if len(line.rstrip)) > 0:
+    #         #     lines.append(line.rstrip())                
+    #         # return lines
+    #         return [
+    #             line.rstrip()
+    #             for line in f.readlines()
+    #             if len(line.rstrip()) > 0
+    #         ]
+    def assertTasks(self, tasks:List[str]):
+        expected_string = "".join((f'{task}\n' for task in tasks))
         with open(self.task_filename, 'r') as f:
-            return [
-                line.rstrip()
-                for line in f.readlines()
-                if len(line.rstrip()) > 0
-            ]
+            actual_string = f.read()
+        self.assertEqual(actual_string, expected_string)
+
+
 
     def test_add_item(self):
         self._setup_tasks(['one', 'two', 'three'])
@@ -40,7 +51,8 @@ class MainTest(TestCase):
 
         add_item(entry, listbox)
 
-        self.assertEqual(self._read_tasks(), ['one', 'two', 'three', 'four'])
+        # self.assertEqual(self._read_tasks(), ['one', 'two', 'three', 'four'])
+        self.assertTasks(['one', 'two', 'three', 'four'])
         listbox.insert.assert_called_with(END, 'four')
 
     def test_delete_item(self):
@@ -62,7 +74,8 @@ class MainTest(TestCase):
 
         delete_item(listbox)
 
-        self.assertEqual(self._read_tasks(), ['one', 'three'])
+        # self.assertEqual(self._read_tasks(), ['one', 'three'])
+        self.assertTasks(['one', 'three'])
 
     def test_delete_item_whitespace(self):
         self._setup_tasks(['one', 'two', 'three'])
@@ -82,7 +95,8 @@ class MainTest(TestCase):
 
         delete_item(listbox)
 
-        self.assertEqual(self._read_tasks(), ['one', 'three'])
+        # self.assertEqual(self._read_tasks(), ['one', 'three'])
+        self.assertTasks(['one', 'three'])
 
 
 

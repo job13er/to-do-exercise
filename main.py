@@ -8,7 +8,7 @@ def add_item(entry: Entry, listbox: Listbox):
     listbox.insert(END, new_task)
 
     with open('tasks.txt', 'a') as tasks_list_file:
-        tasks_list_file.write(f'\n{new_task}')
+        tasks_list_file.write(f'{new_task}\n')
 
 
 def delete_item(listbox: Listbox):
@@ -36,6 +36,13 @@ def delete_item(listbox: Listbox):
         print('------')
 
         # tasks_list_file.close()
+def load_tasks(listbox):
+    # Adding items to the Listbox
+    with open('tasks.txt', 'r+') as tasks_list:
+        for task in tasks_list:
+            listbox.insert(END, task)
+        tasks_list.close()
+
 
 
 def run():
@@ -60,11 +67,12 @@ def run():
 
     tasks.place(x=35, y=50)
 
-    # Adding items to the Listbox
-    with open('tasks.txt', 'r+') as tasks_list:
-        for task in tasks_list:
-            tasks.insert(END, task)
-        tasks_list.close()
+    # # Adding items to the Listbox
+    # with open('tasks.txt', 'r+') as tasks_list:
+    #     for task in tasks_list:
+    #         tasks.insert(END, task)
+    #     tasks_list.close()
+    load_tasks(tasks)
 
     # Creating the Entry widget where the user can enter a new item
     new_item_entry = Entry(root, width=37)
