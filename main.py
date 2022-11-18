@@ -12,6 +12,7 @@ def add_item(entry: Entry, listbox: Listbox):
 
 
 def delete_item(listbox: Listbox):
+
     # print(f'Before: {listbox.get(ACTIVE)}')
     removing = listbox.get(ACTIVE)
     listbox.delete(ACTIVE)
