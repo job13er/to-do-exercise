@@ -25,12 +25,14 @@ def delete_item(listbox: Listbox):
         tasks_list_file.truncate()
 
         for line in lines:
+
             print(f'1)Active:[{removing}]')
             print(f'2)Line:[{line}]')
             print(f'3)s_line:[{line.strip()}]')
             print('\n')
-            if removing.strip() != line.strip():
+            # if removing.strip() != line.strip():
             # if removing != line.strip():
+            if removing != line[:-1]:
                 # lines.remove(line)
                 tasks_list_file.write(line)
         print('------')
@@ -40,8 +42,9 @@ def load_tasks(listbox):
     # Adding items to the Listbox
     with open('tasks.txt', 'r+') as tasks_list:
         for task in tasks_list:
-            listbox.insert(END, task)
-        tasks_list.close()
+
+            listbox.insert(END, task[:-1])
+        # tasks_list.close()
 
 
 
