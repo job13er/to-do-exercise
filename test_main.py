@@ -74,8 +74,10 @@ class MainTest(TestCase):
 
     #     delete_item(listbox)
 
+
     #     # self.assertEqual(self._read_tasks(), ['one', 'three'])
     #     self.assertTasks(['one', 'three'])
+
 
     def test_delete_item(self):
         self._setup_tasks(['one', 'two', 'three'])
@@ -97,7 +99,7 @@ class MainTest(TestCase):
 
         # self.assertEqual(self._read_tasks(), ['one', 'three'])
         self.assertTasks(['one', 'three'])
-    
+
     def test_load_tasks(self):
         self._setup_tasks(['one', 'two', 'three'])
 

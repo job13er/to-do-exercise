@@ -42,9 +42,9 @@ def load_tasks(listbox):
     # Adding items to the Listbox
     with open('tasks.txt', 'r+') as tasks_list:
         for task in tasks_list:
-
             listbox.insert(END, task[:-1])
         # tasks_list.close()
+
 
 
 
